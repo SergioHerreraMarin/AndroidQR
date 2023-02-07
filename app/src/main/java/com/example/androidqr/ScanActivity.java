@@ -2,6 +2,9 @@ package com.example.androidqr;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -28,6 +31,11 @@ public class ScanActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(ScanActivity.this, result.getText(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent();
+                        intent.setData(Uri.parse(result.getText()));
+                        setResult(RESULT_OK, intent); //Esto activa el onActivityResult pasando el resultOk y el intent con los datos
+                        finish(); //Se cierra
+
                     }
                 });
             }

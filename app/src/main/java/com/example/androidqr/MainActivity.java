@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button buttonQr;
     private TextView textViewQR;
+    private int requestCode = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                    startActivity(intentt);
+                    startActivityForResult(intentt, requestCode); //Start activity pero espero respuesta
+
                 }else {
                     requestPermissionLauncher.launch(Manifest.permission.CAMERA);
                 }
@@ -48,9 +50,16 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("Persmisos");
         } else {
             System.out.println("No persmisos");
-
         }
     });
+
+    //Cuando se cierre la actividad anterior se ejecuta esto
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            textViewQR.setText(data.getData().toString());
+        }
+    }
 
 
 
